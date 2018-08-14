@@ -15,11 +15,26 @@ return [
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
-         'db' =>[
-                'host'=> 'localhost',
-                'user'=> 'root',
-                'password'=> '',
-                'database'=> 'slim',
-            ]
+
+        'settings' => [
+        // Slim Settings
+        'determineRouteBeforeAppMiddleware' => false,
+        'displayErrorDetails' => true,
+        'db' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'slim',
+            'username' => 'root',
+            'password' => '',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'options' => [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => true,
+                ],
+        ],
     ],
+],
 ];

@@ -43,6 +43,9 @@ img.avatar {
 .container {
     padding: 16px;
 }
+.container .error{
+    color: red;
+}
 
 span.psw {
     float: right;

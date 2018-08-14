@@ -1,5 +1,4 @@
 <?php
-use classes\Controller\AdController;
 
 // DIC configuration
 
@@ -20,10 +19,47 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+$container['db'] = function($c){
+    $getSettings = $c->get('settings')['db'];
+    $mysqli = new mysqli("localhost","root","","slim");
+    return $mysqli;
+    //var_dump($getSettings);die();
+    //$db = new PDO("mysql:host=localhost;dbname=slim","root","");
+    //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    //return $db;
+};
 
+// $container['db'] = function($c){ 
+//     //setup NOTORM
+//     $db = $c['settings']['db'];
+//     $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['slim'], $db['user'], $db['password']);
+//     // $db = new ($pdo);
+//     $db->debug = true;
+//     return $db;
+// };
 
 $container['AdController'] = function($c){
-	$addController = new classes\Controller\AdController();
-	
-	return $addController;
+	$adController =  new classes\Controller\AdController($c);
+    return 	$adController;
 };
+
+/**
+$container['db'] = function ($container) {
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($container['settings']['db']);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    return $capsule;
+};
+*/
+/**
+$container[App\WidgetController::class] = function ($c) {
+    $view = $c->get('view');
+    $logger = $c->get('logger');
+    $table = $c->get('db')->table('table_name');
+    return new \App\WidgetController($view, $logger, $table);
+};
+*/
